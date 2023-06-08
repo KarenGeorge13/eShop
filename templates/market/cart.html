@@ -1,0 +1,46 @@
+{% extends  'base.html' %}
+
+{% block main %}
+<div class="card mt-2">
+    <div class="card-header">
+        <h3>Корзина</h3>
+    </div>
+    <div class="card-body">
+    {% if cart.price != 0 %}
+        <div class="row justify-content-around">
+            <div class="col-sm-8" id="devices">
+                {% for product in cart.products.all %}
+                    <div class="card mt-2 mb-2">
+                        <h5 class="card-header"><a style="text-decoration: none; color: black" href="{% url 'product' pk=product.id %}">{{ product.name }}</a></h5>
+                        <div class="card-body">
+                            <div class="row justify-content-between">
+                                <div class="col-sm-2">
+                                    <img src="{{ product.product_image.url }}" class="card-img-top" alt="{{ product.name }}">
+                                </div>
+                                <div class="col-sm-3">
+                                    <p class="card-text">{{ product.price }} ₽</p>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a class="btn btn-outline-warning" href="{% url 'remove_from_cart' pk=product.id %}">Удалить из корзины</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-sm-4">
+                <div class="card border-0">
+                    <div class="card-body">
+                        <p>Сумма заказа: {{ cart.price }} ₽</p>
+                         <a class="btn btn-warning" href="{% url 'make_order' pk=cart.id %}">Сделать заказ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <h6>Корзина пуста, добавьте в нее что-то и возвращайтесь</h6>
+    {% endif %}
+    </div>
+
+    </div>
+{% endblock %}

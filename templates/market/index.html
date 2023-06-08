@@ -1,0 +1,24 @@
+{% extends  'base.html' %}
+
+{% block main %}
+<div  class="row justify-content-center">
+    <div  class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Список товаров</h4>
+                <p class="card-text">Список товаров разбитых по категориям, а также с указанием игроков, использующих эти девайсы</p>
+                <a class="btn btn-info" href="{% url 'products' %}">Перейти</a>
+            </div>
+        </div>
+    </div>
+    <div  class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Список игр</h4>
+                <p class="card-text">Список игроков разбитых по различным дицсиплинам, с указанием устройств, которые они используют</p>
+                <a class="btn btn-info" href="{% url 'players' %}">Перейти</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

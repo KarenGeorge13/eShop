@@ -1,0 +1,43 @@
+{% extends  'base.html' %}
+
+{% block main %}
+    <div class="card mt-2">
+    <div class="card-header">
+        <h3> {{ player.name }}</h3>
+    </div>
+    <div class="card-body">
+        <div class="row justify-content-around">
+            <div class="col-sm-4">
+                <div class="card">
+                    <img src="{{ player.player_image.url }}" class="card-img-top" alt="{{ player.name }}">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card border-0">
+                    <div class="card-body">
+                        <p>{{ player.description }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4" id="devices">
+                {% for product in devices %}
+                    <div class="card mt-2 mb-2">
+                        <h5 class="card-header"><a style="text-decoration: none; color: black" href="{% url 'product' pk=product.id %}">{{ product.name }}</a></h5>
+                        <div class="card-body" style="display: none">
+                            <img src="{{ product.product_image.url }}" class="card-img-top" alt="{{ product.name }}">
+                            <p class="card-text">{{ product.description }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+    $("#devices").children(".card").children(".card-header").on("click", function (){
+        $(this).siblings(".card-body").slideToggle();
+    });
+</script>
+{% endblock %}

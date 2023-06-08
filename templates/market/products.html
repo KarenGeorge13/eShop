@@ -1,0 +1,40 @@
+{% extends  'base.html' %}
+
+{% block main %}
+<div class="container">
+    {% for product_type, products in product_list.items %}
+        <div class="card mb-2 mt-2">
+            <div class="card-header">
+                <h5>Тип продукта: {{ product_type.name }}</h5>
+                <p>{{ product_type.description }}</p>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {% for product in products %}
+                        <div class="col-sm-4">
+                        <div class="card">
+                            <h5 class="card-header"><a style="text-decoration: none; color: black" href="{% url 'product' pk=product.id %}">{{ product.name }}</a></h5>
+                            <img src="{{ product.product_image.url }}" class="card-img-top" alt="{{ product.name }}">
+                            <div class="card-body" style="display: none">
+                                <p class="card-text">{{ product.description }}</p>
+                            </div>
+                            <h6 class="card-footer">{{ product.price }} ₽</h6>
+                        </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+</div>
+
+
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+    $(".card-header").on("click", function (){
+        $(this).siblings(".card-body").slideToggle();
+    });
+</script>
+{% endblock %}

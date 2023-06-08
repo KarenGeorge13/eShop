@@ -1,0 +1,48 @@
+{% extends  'base.html' %}
+
+{% block main %}
+    <div class="card mt-2">
+        <div class="card-header">
+            <h3>{{ product.product_type.name }}: {{ product.name }}</h3>
+        </div>
+    <div class="card-body">
+        <div class="row justify-content-around">
+            <div class="col-sm-4">
+                <div class="card border-0">
+                    <img src="{{ product.product_image.url }}" class="card-img-top" alt="{{ product.name }}">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card border-0">
+                    <div class="card-body">
+                        <h3>{{ product.price }} ₽</h3>
+                        {% if product in cart.products.all %}
+                            <a class="btn btn-outline-warning" href="{% url 'remove_from_cart' pk=product.id %}">Удалить из корзины</a>
+                        {% else %}
+                            {% if user.is_authenticated %}
+                                <a class="btn btn-warning" href="{% url 'add_to_cart' pk=product.id %}">Добавить в корзину</a>
+                            {% else %}
+                                <a class="btn btn-warning" id="plug">Добавить в корзину</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card border-0">
+            <div class="card-body">
+                <p>{{ product.description }}</p>
+                <p>Производитель: {{ product.manufacturer }}</p>
+                <p>Дата выпуска: {{ product.release_date }}</p>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+    $("#plug").on("click", function (){
+        alert("Войдите чтобы добавлять товары в корзину");
+    });
+</script>
+{% endblock %}

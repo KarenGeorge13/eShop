@@ -1,0 +1,39 @@
+{% extends  'base.html' %}
+
+{% block main %}
+<div class="container">
+    {% for game, players in player_list.items %}
+        <div class="card mb-2 mt-2">
+            <div class="card-header">
+                <h5>Название игры: {{ game.name }}</h5>
+                <p>{{ game.description }}</p>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {% for player in players %}
+                        <div class="col-sm-4">
+                        <div class="card">
+                            <h5 class="card-header"><a style="text-decoration: none; color: black" href="{% url 'player' pk=player.id %}">{{ player.name }}</a></h5>
+                            <img src="{{ player.player_image.url }}" class="card-img-top" alt="{{ player.name }}">
+                            <div class="card-body" style="display: none">
+                                <p class="card-text">{{ player.description }}</p>
+                            </div>
+                        </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+</div>
+
+
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+    $(".card-header").on("click", function (){
+        $(this).siblings(".card-body").slideToggle();
+    });
+</script>
+{% endblock %}

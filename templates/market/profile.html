@@ -1,0 +1,51 @@
+{% extends  'base.html' %}
+
+{% block main %}
+<div class="card mt-2">
+    <div class="card-header">
+        <h3>{{ user.username }}</h3>
+    </div>
+    <div class="card-body"  id="orders">
+        {% if not orders %}
+            <h6>У вас еще не было заказов</h6>
+        {% endif %}
+        {% for order in orders %}
+            <div class="card mt-2 mb-2">
+                <div class="card-header">
+                    <h3>{{ order.date }} Заказ на {{ order.price }} ₽</h3>
+                </div>
+                <div class="card-body">
+                <div class="row">
+                    {% for product in order.products.all %}
+                        <div class="col-sm-8">
+                        <div class="card mt-2 mb-2">
+                            <div class="card-body">
+                                <div class="row justufy-content-between">
+                                    <div class="col-sm-2">
+                                        <img src="{{ product.product_image.url }}" class="card-img-top" alt="{{ product.name }}">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h5><a style="text-decoration: none; color: black" href="{% url 'product' pk=product.id %}">{{ product.name }}</a></h5>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <p class="card-text">{{ product.price }} ₽</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+    $("#orders").children(".card").children(".card-header").on("click", function (){
+        $(this).siblings(".card-body").slideToggle();
+    });
+</script>
+{% endblock %}
